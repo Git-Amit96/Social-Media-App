@@ -1,5 +1,5 @@
 const express = require("express");
-const isSignIn = require("../Middlewares/isSignIn.js");
+const {isSignIn} = require("../Middlewares/isSignIn.js");
 const { View, Update, SendRequest, ReviewConnection, ViewConnections, Feed } = require("../Controllers/Profile.js");
 const upload = require("../Middlewares/multer.config.js");
 

@@ -11,7 +11,7 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json()); // Middleware to parse JSON payloads
 app.use(cors({
-    origin: ['http://localhost:3000'], // List of allowed origins
+    origin: ['http://localhost:5173'], // List of allowed origins
     credentials: true,
     methods: ['GET', 'POST', "PATCH", "DELETE", "PUT", "HEAD"], // Allowed HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers

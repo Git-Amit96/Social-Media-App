@@ -2,9 +2,9 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "this folder contains all the backend knowledge and projects i have made",
-  "main": "main.js",
+  "main": "server.js",
   "scripts": {
-    "start": " nodemon main.js",
+    "start": " nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Amit Saini",

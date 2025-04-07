@@ -52,13 +52,13 @@ const signIn = async (req, res) => {
         const isPresent = await Profile.findOne({ Email: email });
         if (!isPresent) {
             return res.status(400).json({ status: "Error", message: "User not found. Please Sign Up." });
-        } 
-        
-        const passwordCheck= await bcrypt.compare(password, isPresent.Password);
-        if(!passwordCheck){
+        }
+
+        const passwordCheck = await bcrypt.compare(password, isPresent.Password);
+        if (!passwordCheck) {
             return res.status(400).json({ status: "Error", message: "Password is not correct" });
 
-        } 
+        }
         const token = jwt.sign({ id: isPresent._id }, "Auth@12345", { expiresIn: "7d" });
         if (isPresent.isVerified) {
 
@@ -66,7 +66,7 @@ const signIn = async (req, res) => {
             return res.status(201).json({
                 status: "Success",
                 message: "Login Successful",
-                
+
             });
         }
         const fifteenMinutes = 15 * 60 * 1000;
@@ -114,7 +114,7 @@ const newOtp = async (req, res) => {
             return res.status(201).json({
                 status: "Success",
                 message: "Already Verified. No need for OTP. SignIn without OTP",
-                
+
             });
         }
 
@@ -134,4 +134,4 @@ const newOtp = async (req, res) => {
 };
 
 
-module.exports = {signUp, signIn, logout, newOtp};
+module.exports = { signUp, signIn, logout, newOtp };

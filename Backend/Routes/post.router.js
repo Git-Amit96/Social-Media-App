@@ -1,6 +1,6 @@
 const express = require("express");
 const { CreatePost, GetUserPosts, GetFeedPosts, CommentAndLike } = require("../Controllers/Post.js");
-const isSignIn = require("../Middlewares/isSignIn.js");
+const {isSignIn} = require("../Middlewares/isSignIn.js");
 const upload = require("../Middlewares/multer.config.js");
 
 const postRouter = express.Router();
