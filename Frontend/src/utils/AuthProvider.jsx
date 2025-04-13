@@ -8,7 +8,7 @@ const AuthProvider = ( {children} ) => {
 
     const [auth, setAuth] = useState({
         isAuth: false,
-        user: null
+        user: null,
     })
 
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -17,11 +17,11 @@ const AuthProvider = ( {children} ) => {
         try {
 
             const res = await axios.get(`${apiUrl}/user/verify`, {
-                withCredentials: true, // 👈 include cookies manually
+                withCredentials: true, 
               });
-            const json = await res.json();
-            if (json.ok) {
-                setAuth({ isAuth: true, user: json.data })
+            
+            if (res.data.ok) {
+                setAuth({ isAuth: true, user: res.data.data})
             }
             else {
                 setAuth({ isAuth: false, user: null })

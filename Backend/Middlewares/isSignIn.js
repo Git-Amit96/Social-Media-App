@@ -26,9 +26,7 @@ const isSignIn = async(req, res, next)=>{
 const verify = async(req,res)=>{
     try {
         const token = req.cookies.Token;
-        console.log(token);
         if(!token){
-            console.log("No token present.")
             throw new Error("Access Denied");
         }
         const decoded = jwt.verify(token, "Auth@12345");
@@ -40,9 +38,9 @@ const verify = async(req,res)=>{
             return res.status(400).json({ status: "Error", message: "User not found. Please Sign Up." });
         }
         req.user = user;
-        res.status(200).json({ ok: true, data: user });
+        return res.status(200).json({ ok: true, data: user });
     } catch (err) {
-        console.log("Login again");
+        
         res.status(500).json({ status: "Failed",  });
     }
 }

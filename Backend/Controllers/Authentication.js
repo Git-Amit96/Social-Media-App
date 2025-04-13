@@ -34,12 +34,12 @@ const signUp = async (req, res) => {
         await user.save();
 
         return res.status(201).json({
-            status: "Success",
+            ok: true,
             message: "User Registered Successfully. Now SignIn.",
             OTP: otp,
         });
     } catch (err) {
-        res.status(500).json({ status: "Failed", message: "SignUp Failed. Please Try Again" });
+        res.status(500).json({ ok: false, message: "SignUp Failed. Please Try Again" });
     }
 };
 
@@ -62,10 +62,14 @@ const signIn = async (req, res) => {
         const token = jwt.sign({ id: isPresent._id }, "Auth@12345", { expiresIn: "7d" });
         if (isPresent.isVerified) {
 
-            res.cookie("Token", token);
+            res.cookie('Token', token, {
+                httpOnly: true,
+                secure: false,
+                sameSite: "Lax"
+            });
             return res.status(201).json({
-                status: "Success",
-                message: "Login Successful",
+                ok: true,
+                message: "Login Successful"
 
             });
         }
@@ -82,21 +86,28 @@ const signIn = async (req, res) => {
         await isPresent.save();
         res.cookie("Token", token);
         return res.status(201).json({
-            status: "Success",
+            ok: true,
             message: "Login Successful",
 
         });
 
     } catch (err) {
-        res.status(500).json({ status: "Failed", message: "Login Failed. Please Try Again" });
+        res.status(500).json({ ok: false, message: "Login Failed. Please Try Again" });
     }
 }
 
 const logout = (req, res) => {
     res.cookie("Token", null, {
-        expires: new Date(Date.now())
+        secure: false, 
+        httpOnly: true,
+        sameSite: "Lax",
+        expires: new Date(Date.now()),
     })
-    res.send("Logged out successful!");
+    return res.status(201).json({
+        ok: true,
+        message: "Logout Successful",
+
+    });
 };
 
 const newOtp = async (req, res) => {

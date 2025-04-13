@@ -78,7 +78,7 @@ const GetFeedPosts = async (req, res) => {
                 { author: { $ne: loggedUser._id } },
             ],
 
-        }).populate("author", "Name").populate({
+        }).populate("author", "Name photoURL").populate({
             path: "comments", // Populate the comments array
             select: "text user", // Include only 'text' and 'user' fields from Comment
             populate: {
@@ -91,9 +91,11 @@ const GetFeedPosts = async (req, res) => {
             response.push({
                 _id: entry._id,
                 author: entry.author.Name,
+                photoURL: entry.author.photoURL,
                 media: entry.media,
                 likes: entry.like.length,
                 comments: entry.comments,
+                caption: entry.caption,
                 date: new Date(entry.createdAt.getTime()),
             })
         });
