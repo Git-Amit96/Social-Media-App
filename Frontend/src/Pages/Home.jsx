@@ -20,10 +20,14 @@ const Home = () => {
   }
   useEffect(() => {
     fetchFeed();
-  }, [])
+  }, []);
+
+  useEffect(()=>{
+    console.log("Feed Posts Data: ",feedPosts);
+  }, [feedPosts])
  
   return (
-    <div className=' flex-col flex items-center border-r-2 border-l-2 sm:border-gray-100 ' >
+    <div className=' flex-col flex items-center  ' >
       
       <TopBar />
       <div className='w-full h-18 border-b border-gray-200 dark:border-gray-800 mt-14 m-auto max-w-[450px] box-border'>
@@ -33,8 +37,8 @@ const Home = () => {
 
         {
           feedPosts.length > 0 ?
-            feedPosts.map(({author, _id, comments, caption, likes, photoURL, media}, index) => {
-              return <MediaCard key={_id} name={author} comments={comments} caption={caption} likes={likes} photoURL={photoURL} media={media[index]}/>
+            feedPosts.map(({author, _id, comments, caption, likes, photoURL, media}) => {
+              return <MediaCard key={_id} name={author} comments={comments} caption={caption} likes={likes} photoURL={photoURL} media={media} postId={_id}/>
             })
             : <></>
         }
@@ -46,6 +50,3 @@ const Home = () => {
 };
 
 export default Home;
-/* <button onClick={handleLogout} className='font-sans'>
-  Logout
-</button> */

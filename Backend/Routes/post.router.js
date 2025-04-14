@@ -5,7 +5,7 @@ const upload = require("../Middlewares/multer.config.js");
 
 const postRouter = express.Router();
 
-postRouter.post("/create-post", isSignIn, upload.array("uploadedPost", 5), CreatePost);
+postRouter.post("/create-post", isSignIn, upload.array("files", 5), CreatePost);
 postRouter.get("/get-user-posts", isSignIn, GetUserPosts);
 postRouter.get("/get-feed-posts", isSignIn, GetFeedPosts);
 postRouter.post("/post-comments", isSignIn, CommentAndLike);

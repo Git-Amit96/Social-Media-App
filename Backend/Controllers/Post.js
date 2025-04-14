@@ -22,10 +22,10 @@ const CreatePost = async (req, res) => {
             caption: caption
         });
         await newPost.save();
-        return res.status(200).json({ success: true, message: "Post created successfully." })
+        return res.status(200).json({ ok: true, message: "Post created successfully." })
 
     } catch (error) {
-        res.status(500).json({ status: "Failed", message: "Error occured! Please try again" });
+        res.status(500).json({ ok: false, message: "Error occured! Please try again" });
     }
 }
 
@@ -83,7 +83,7 @@ const GetFeedPosts = async (req, res) => {
             select: "text user", // Include only 'text' and 'user' fields from Comment
             populate: {
                 path: "user", // Populate the 'user' field inside each comment
-                select: "Name", // Include only 'Name' field from the Profile
+                select: "Name photoURL", // Include only 'Name' field from the Profile
             },
         }).skip(skip).limit(limit);
         const response = new Array();
@@ -112,13 +112,13 @@ const CommentAndLike = async (req, res) => {
         const { postId, like, comment } = req.body;
 
         if (!postId || (!comment && !like)) {
-            return res.status(400).json({ status: "Failed", message: "Invalid input" });
+            return res.status(400).json({ ok: false, message: "Invalid input" });
         }
 
         // Fetch the post data
         const PostData = await Post.findById(postId);
         if (!PostData) {
-            return res.status(404).json({ status: "Failed", message: "Post not found" });
+            return res.status(404).json({ ok: false, message: "Post not found" });
         }
         let commentObj;
         if (comment) {
@@ -135,10 +135,10 @@ const CommentAndLike = async (req, res) => {
             PostData.like.push(loggedUser._id);
         }
         await PostData.save();
-        return res.status(200).json({ success: true, message: "comment added successfully" });
+        return res.status(200).json({ ok: true, message: "comment added successfully" });
 
     } catch (error) {
-        res.status(500).json({ status: "Failed", message: "Error occured! Please try again" });
+        res.status(500).json({ ok: false, message: "Error occured! Please try again" });
     }
 }
 

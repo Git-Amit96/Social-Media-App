@@ -16,6 +16,15 @@ app.use(cors({
     methods: ['GET', 'POST', "PATCH", "DELETE", "PUT", "HEAD"], // Allowed HTTP methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
 }))
+app.use((err, req, res, next) => {
+    if (err.code === 'LIMIT_FILE_SIZE') {
+        return res.status(400).json({
+            success: false,
+            message: 'File is too large. Maximum size allowed is 5MB.'
+        });
+    }
+    next(err);
+});
 
 // Register the `auth` router
 app.use("/user", auth);
